@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>админ-панель</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="card">
+        <h1>это админ-панель</h1>
+        <h2>заказы</h2>
+
+        <table class="price-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>client_id</th>
+                    <th>дата создания</th>
+                    <th>название</th>
+                    <th>описание</th>
+                    <th>цена</th>
+                    <th>оплачен(да/нет)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Начинаем цикл по списку services -->
+                {% for r in result %}
+                <tr>
+                    <!-- Вставляем значения из словаря -->
+                    <td>{{ r.ID }}</td>
+                    <td>{{ r.Client_id }}</td>
+                    <td>{{ r.Created_at }}</td>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.Options }}</td>
+                    <td>{{ r.Price }}</td>
+                    <td>
+                        {% if r.Pay == 'yes' %}
+                            <!-- Если сделано, показываем текст, а не кнопку -->
+                            <span style="color: green; font-weight: bold;">✔ да</span>
+                        {% else %}
+                            <!-- Если не сделано, показываем кнопку -->
+                            <a href="/edit/{{ r.ID }}" class="btn-edit"><button>оплатить</button></a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- Конец цикла -->
+            </tbody>
+        </table>
+        <h2>клиенты</h2>
+
+        <table class="price-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>имя</th>
+                    <th>телефон</th>
+                    <th>user_id</th>
+                    <th>эл. почта</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Начинаем цикл по списку services -->
+                {% for rc in result_client %}
+                <tr>
+                    <!-- Вставляем значения из словаря -->
+                    <td>{{ rc.ID }}</td>
+                    <td>{{ rc.name }}</td>
+                    <td>{{ rc.Phone }}</td>
+                    <td>{{ rc.User_id }}</td>
+                    <td>{{ rc.Email }}</td>
+                </tr>
+                {% endfor %}
+                <!-- Конец цикла -->
+            </tbody>
+        </table>
+        <h1>статистика</h1>
+        <h1>всего заказов: {{ total_orders }}</h1>
+        <h1>всего клиентов: {{ total_client }}</h1>
+        <h1>всего заработано: {{ total_price }}</h1>
+    </div>
+</body>
+</html>
